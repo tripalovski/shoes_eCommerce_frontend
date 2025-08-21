@@ -22,8 +22,9 @@ export class FootwearService {
     return this.http.get<Footwear>(ServiceConstants.API_METHODS.FOOTWEAR.GET_BY_ID(id));
   }
 
-
-  createFootwear(data: CreateFootwearDto): Observable<Footwear> {
+  // PUT
+  createFootwear(footWear: Footwear): Observable<Footwear> {
+    const {id, ...data} = footWear;
     return this.http.post<Footwear>(ServiceConstants.API_METHODS.FOOTWEAR.CREATE, data);
   }
 
