@@ -2,6 +2,8 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CreateFootwearDto, Footwear } from '../../../core/models/Footwear.model';
 import { FootwearService } from '../../../core/services/footwear';
+import { Modal } from 'bootstrap';
+
 
 @Component({
   selector: 'app-shop',
@@ -96,5 +98,80 @@ export class Shop {
     }
     });
   }
+
+  deleteShoe(id: number): void {
+    if (confirm('Are you sure you want to delete this shoe?')) {
+      this.footwearService.deleteFootwear(id).subscribe({
+        next: () => {
+          console.log('Deleted shoe with id:', id);
+          this.loadShoes(); // reload list
+        },
+        error: (err) => {
+          console.error('Error deleting shoe:', err);
+          alert('Failed to delete shoe.');
+        }
+      });
+    }
+  }
+
+editingShoe: Footwear = {
+    id: 0,
+    name: '',
+    brand: '',
+    price: 0,
+    color: '',
+    size: '',
+    stock: 0,
+    description: '',
+    imageUrl: ''
+  };
+
+formShoe: Footwear = this.emptyShoe();
+
+emptyShoe(): Footwear {
+  return {
+    id: 0,
+    name: '',
+    brand: '',
+    price: 0,
+    color: '',
+    size: '',
+    stock: 0,
+    description: '',
+    imageUrl: ''
+  };
+}
+
+updateShoe(): void {
+  if (this.editingShoe) {
+    // edit mode
+    this.footwearService.updateFootwear(this.editingShoe.id, this.editingShoe).subscribe({
+      next: () => {
+        console.log('Updated shoe:', this.editingShoe);
+        this.loadShoes();
+      },
+      error: (err) => {
+        console.error('Error updating shoe:', err);
+        alert('Failed to update shoe.');
+      }
+    });
+  }
+
+  // close modal
+  const modalElement = document.getElementById('shoeModal');
+  if (modalElement) {
+    const modal = Modal.getInstance(modalElement);
+    modal?.hide();
+  }
+}
+
+openEditModal(shoe: Footwear): void {
+  this.editingShoe = { ...shoe }; // clone to avoid mutating original
+  const modalElement = document.getElementById('shoeModal');
+  if (modalElement) {
+    const modal = new Modal(modalElement);
+    modal.show();
+  }
+}
 
 }

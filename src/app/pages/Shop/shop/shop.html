@@ -8,37 +8,22 @@
 
         <!-- Price filter -->
         <label class="form-label">Max Price</label>
-        <input
-          type="range"
-          class="form-range"
-          min="5000"
-          max="30000"
-          [(ngModel)]="maxPrice"
-          (change)="applyFilter()"
-        />
+        <input type="range" class="form-range" min="5000" max="30000" [(ngModel)]="maxPrice" (change)="applyFilter()" />
         <p>Maximum price: {{ maxPrice }} RSD</p>
 
         <!-- Brand filter -->
         <label class="form-label mt-2">Brand</label>
-        <select
-          class="form-select"
-          [(ngModel)]="selectedBrand"
-          (change)="applyFilter()"
-        >
+        <select class="form-select" [(ngModel)]="selectedBrand" (change)="applyFilter()">
           <option value="">All</option>
 
           @for (brand of brands; track $index) {
-            <option [value]="brand">{{ brand }}</option>
+          <option [value]="brand">{{ brand }}</option>
           }
         </select>
 
         <!-- Add button -->
-        <button
-          class="btn btn-success mt-3 w-100"
-          data-bs-toggle="modal"
-          data-bs-target="#createModal"
-          (click)="openCreateModal()"
-        >
+        <button class="btn btn-success mt-3 w-100" data-bs-toggle="modal" data-bs-target="#createModal"
+          (click)="openCreateModal()">
           + Add Shoe
         </button>
       </div>
@@ -48,93 +33,19 @@
     <div class="col-md-9">
       <div class="row">
         @for (shoe of filteredShoes; track $index) {
-          <div class="col-md-4 mb-4">
-            <div class="card h-100">
-              <img
-                [src]="shoe.imageUrl"
-                class="card-img-top"
-                alt="{{ shoe.name }}"
-              />
-              <div class="card-body">
-                <h5 class="card-title">{{ shoe.name }}</h5>
-                <p class="card-text">{{ shoe.brand }}</p>
-                <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
-                <button class="btn btn-primary w-100">Add to cart</button>
-              </div>
+        <div class="col-md-4 mb-4">
+          <div class="card h-100">
+            <img [src]="shoe.imageUrl" class="card-img-top" alt="{{ shoe.name }}" />
+            <div class="card-body">
+              <h5 class="card-title">{{ shoe.name }}</h5>
+              <p class="card-text">{{ shoe.brand }}</p>
+              <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
+              <button class="btn btn-primary w-100">Add to cart</button>
+              <button class="btn btn-danger w-100" (click)="deleteShoe(shoe.id)">Delete</button>
+              <button class="btn btn-warning w-100 mb-2" (click)="openEditModal(shoe)">Edit</button>
             </div>
           </div>
-        }
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Create Modal -->
-<div class="modal fade" id="createModal" tabindex="-1" aria-hidden="true"><div class="container mt-4">
-  <div class="row">
-    <!-- Sidebar -->
-    <div class="col-md-3">
-      <div class="card p-3">
-        <h5>Filters</h5>
-        <hr>
-
-        <!-- Price filter -->
-        <label class="form-label">Max Price</label>
-        <input
-          type="range"
-          class="form-range"
-          min="5000"
-          max="30000"
-          [(ngModel)]="maxPrice"
-          (change)="applyFilter()"
-        />
-        <p>Maximum price: {{ maxPrice }} RSD</p>
-
-        <!-- Brand filter -->
-        <label class="form-label mt-2">Brand</label>
-        <select
-          class="form-select"
-          [(ngModel)]="selectedBrand"
-          (change)="applyFilter()"
-        >
-          <option value="">All</option>
-
-          @for (brand of brands; track $index) {
-            <option [value]="brand">{{ brand }}</option>
-          }
-        </select>
-
-        <!-- Add button -->
-        <button
-          class="btn btn-success mt-3 w-100"
-          data-bs-toggle="modal"
-          data-bs-target="#createModal"
-          (click)="openCreateModal()"
-        >
-          + Add Shoe
-        </button>
-      </div>
-    </div>
-
-    <!-- Products list -->
-    <div class="col-md-9">
-      <div class="row">
-        @for (shoe of filteredShoes; track $index) {
-          <div class="col-md-4 mb-4">
-            <div class="card h-100">
-              <img
-                [src]="shoe.imageUrl"
-                class="card-img-top"
-                alt="{{ shoe.name }}"
-              />
-              <div class="card-body">
-                <h5 class="card-title">{{ shoe.name }}</h5>
-                <p class="card-text">{{ shoe.brand }}</p>
-                <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
-                <button class="btn btn-primary w-100">Add to cart</button>
-              </div>
-            </div>
-          </div>
+        </div>
         }
       </div>
     </div>
@@ -181,17 +92,13 @@
 
         <!-- Description -->
         <label class="form-label">Description</label>
-        <textarea class="form-control" rows="3" [(ngModel)]="newShoe.description" placeholder="Short description"></textarea>
+        <textarea class="form-control" rows="3" [(ngModel)]="newShoe.description"
+          placeholder="Short description"></textarea>
       </div>
 
       <div class="modal-footer">
         <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button
-          class="btn btn-success"
-          [disabled]="isSubmitting"
-          (click)="createShoe()"
-          data-bs-dismiss="modal"
-        >
+        <button class="btn btn-success" [disabled]="isSubmitting" (click)="createShoe()" data-bs-dismiss="modal">
           Save
         </button>
       </div>
@@ -199,57 +106,46 @@
   </div>
 </div>
 
+
+<!-- Edit Modal -->
+<div class="modal fade" id="shoeModal" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Add New Shoe</h5>
+        <h5 class="modal-title">Edit Shoe</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-
       <div class="modal-body">
-        <!-- Name -->
-        <label class="form-label">Name</label>
-        <input class="form-control mb-2" [(ngModel)]="newShoe.name" placeholder="e.g. Air Max 90" />
+        <form>
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" [(ngModel)]="editingShoe.name" name="name">
+          </div>
 
-        <!-- Brand -->
-        <label class="form-label">Brand</label>
-        <input class="form-control mb-2" [(ngModel)]="newShoe.brand" placeholder="e.g. Nike" />
+          <div class="mb-3">
+            <label class="form-label">Brand</label>
+            <input type="text" class="form-control" [(ngModel)]="editingShoe.brand" name="brand">
+          </div>
 
-        <!-- Color -->
-        <label class="form-label">Color</label>
-        <input class="form-control mb-2" [(ngModel)]="newShoe.color" placeholder="e.g. White" />
+          <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" [(ngModel)]="editingShoe.price" name="price">
+          </div>
 
-        <!-- Size -->
-        <label class="form-label">Size (EU)</label>
-        <input class="form-control mb-2" [(ngModel)]="newShoe.size" min="30" max="50" />
+          <div class="mb-3">
+            <label class="form-label">Stock</label>
+            <input type="number" class="form-control" [(ngModel)]="editingShoe.stock" name="stock">
+          </div>
 
-        <!-- Price -->
-        <label class="form-label">Price (RSD)</label>
-        <input type="number" class="form-control mb-2" [(ngModel)]="newShoe.price" min="1" />
-
-        <!-- Stock -->
-        <label class="form-label">Stock</label>
-        <input type="number" class="form-control mb-2" [(ngModel)]="newShoe.stock" min="0" />
-
-        <!-- Image URL -->
-        <label class="form-label">Image URL</label>
-        <input class="form-control mb-2" [(ngModel)]="newShoe.imageUrl" placeholder="https://..." />
-
-        <!-- Description -->
-        <label class="form-label">Description</label>
-        <textarea class="form-control" rows="3" [(ngModel)]="newShoe.description" placeholder="Short description"></textarea>
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="editingShoe.description" name="description"></textarea>
+          </div>
+        </form>
       </div>
-
       <div class="modal-footer">
-        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-        <button
-          class="btn btn-success"
-          [disabled]="isSubmitting"
-          (click)="createShoe()"
-          data-bs-dismiss="modal"
-        >
-          Save
-        </button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="updateShoe()">Save changes</button>
       </div>
     </div>
   </div>
