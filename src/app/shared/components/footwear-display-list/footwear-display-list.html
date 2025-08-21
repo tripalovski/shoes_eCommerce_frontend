@@ -1,1 +1,17 @@
-<p>footwear-display-list works!</p>
+<div class="row">
+    @for (shoe of filteredShoes; track $index) {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+            <img [src]="shoe.imageUrl" class="card-img-top" alt="{{ shoe.name }}" />
+            <div class="card-body">
+                <h5 class="card-title">{{ shoe.name }}</h5>
+                <p class="card-text">{{ shoe.brand }}</p>
+                <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
+                <ng-container 
+                    *ngTemplateOutlet="contentTemplate; context: { $implicit: shoe }"
+                ></ng-container>
+            </div>
+            </div>
+        </div>
+    }
+</div>

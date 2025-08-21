@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
-import { CreateFootwearDto, Footwear } from '../../core/models/Footwear.model';
 import { FootwearService } from '../../core/services/footwear';
 import { FormsModule } from '@angular/forms';
 import { CreateShoeModal } from './create-shoe-modal/create-shoe-modal';
-import { Modal } from 'bootstrap';
 import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
+import { FootwearDisplayList } from "../../shared/components/footwear-display-list/footwear-display-list";
+import { Footwear } from '../../core/models/Footwear.model';
 
 @Component({
   selector: 'app-admin',
-  imports: [FormsModule, CreateShoeModal, FilterFootwearSidebar],
+  imports: [FormsModule, CreateShoeModal, FilterFootwearSidebar, FootwearDisplayList],
   templateUrl: './admin.html',
   styleUrl: './admin.css'
 })
@@ -40,7 +40,6 @@ export class Admin {
       }
     });
   }
-
 
 
   // Apply local filters (price + brand)
@@ -102,6 +101,7 @@ export class Admin {
     this.formShoe = { ...shoe }; // clone to avoid mutating original
   }
 
+
   editShoe(): void {
     if (this.formShoe) {
       this.footwearService.updateFootwear(this.formShoe.id, this.formShoe).subscribe({
@@ -115,14 +115,8 @@ export class Admin {
         }
       });
     }
-
-    // close modal
-    const modalElement = document.getElementById('shoeModal');
-    if (modalElement) {
-      const modal = Modal.getInstance(modalElement);
-      modal?.hide();
-    }
   }
+
 
   deleteShoe(id: number): void {
     if (confirm('Are you sure you want to delete this shoe?')) {

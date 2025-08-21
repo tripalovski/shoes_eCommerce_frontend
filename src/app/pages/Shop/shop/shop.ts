@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CreateFootwearDto, Footwear } from '../../../core/models/Footwear.model';
+import { Footwear } from '../../../core/models/Footwear.model';
 import { FootwearService } from '../../../core/services/footwear';
-import { Modal } from 'bootstrap';
 import { FilterFootwearSidebar } from "../../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
+import { FootwearDisplayList } from "../../../shared/components/footwear-display-list/footwear-display-list";
 
 
 @Component({
   selector: 'app-shop',
-  imports: [FormsModule, FilterFootwearSidebar],
+  imports: [FormsModule, FilterFootwearSidebar, FootwearDisplayList],
   templateUrl: './shop.html',
   styleUrl: './shop.css'
 })

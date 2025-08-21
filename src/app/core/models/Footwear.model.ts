@@ -9,5 +9,3 @@ export interface Footwear {
   description: string;
   imageUrl: string;
 }
-
-export type CreateFootwearDto = Omit<Footwear, 'id'>;

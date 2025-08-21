@@ -8,24 +8,17 @@
       ></app-filter-footwear-sidebar>
     </div>
 
-    <!-- Products list -->
+   <!-- Products list -->
     <div class="col-md-9">
-      <div class="row">
-        @for (shoe of filteredShoes; track $index) {
-        <div class="col-md-4 mb-4">
-          <div class="card h-100">
-            <img [src]="shoe.imageUrl" class="card-img-top" alt="{{ shoe.name }}" />
-            <div class="card-body">
-              <h5 class="card-title">{{ shoe.name }}</h5>
-              <p class="card-text">{{ shoe.brand }}</p>
-              <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
-              <button class="btn btn-primary w-100">Add to cart</button>
-            </div>
-          </div>
-        </div>
-        }
-      </div>
+        <app-footwear-display-list
+            [filteredShoes]="filteredShoes"  
+            [contentTemplate]="buttonsTemplate"    
+        >
+        </app-footwear-display-list>
+        <ng-template #buttonsTemplate let-shoe>
+            <button class="btn btn-primary w-100">Add to cart</button>
+        </ng-template>
     </div>
+    
   </div>
 </div>
-
