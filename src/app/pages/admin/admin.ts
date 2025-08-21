@@ -4,10 +4,11 @@ import { FootwearService } from '../../core/services/footwear';
 import { FormsModule } from '@angular/forms';
 import { CreateShoeModal } from './create-shoe-modal/create-shoe-modal';
 import { Modal } from 'bootstrap';
+import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 
 @Component({
   selector: 'app-admin',
-  imports: [FormsModule, CreateShoeModal],
+  imports: [FormsModule, CreateShoeModal, FilterFootwearSidebar],
   templateUrl: './admin.html',
   styleUrl: './admin.css'
 })
@@ -33,7 +34,6 @@ export class Admin {
     this.footwearService.getAllFootwears().subscribe({
       next: (res: Footwear[]) => {
         this.shoes = res;
-        this.applyFilter();
       },
       error: () => {
         alert('Something went wrong while loading footwear.');
@@ -42,11 +42,10 @@ export class Admin {
   }
 
 
+
   // Apply local filters (price + brand)
-  applyFilter(): void {
-    this.filteredShoes = this.shoes.filter(p => p.price <= this.maxPrice
-      && (this.selectedBrand === '' || p.brand === this.selectedBrand)
-    );
+  applyFilter(filteredShoes: Footwear[]): void {
+    this.filteredShoes = filteredShoes;
   }
 
 

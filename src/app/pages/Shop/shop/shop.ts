@@ -3,11 +3,12 @@ import { FormsModule } from '@angular/forms';
 import { CreateFootwearDto, Footwear } from '../../../core/models/Footwear.model';
 import { FootwearService } from '../../../core/services/footwear';
 import { Modal } from 'bootstrap';
+import { FilterFootwearSidebar } from "../../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 
 
 @Component({
   selector: 'app-shop',
-  imports: [FormsModule],
+  imports: [FormsModule, FilterFootwearSidebar],
   templateUrl: './shop.html',
   styleUrl: './shop.css'
 })
@@ -34,20 +35,16 @@ export class Shop {
     this.footwearService.getAllFootwears().subscribe({
       next: (res: Footwear[]) => {
         this.shoes = res;
-        this.applyFilter();
       },
       error: () => {
         alert('Something went wrong while loading footwear.');
       }
     });
   }
-  
+
 
   // Apply local filters (price + brand)
-  applyFilter(): void {
-    this.filteredShoes = this.shoes.filter(p =>
-      p.price <= this.maxPrice &&
-      (this.selectedBrand === '' || p.brand === this.selectedBrand)
-    );
+  applyFilter(filteredShoes: Footwear[]): void {
+    this.filteredShoes = filteredShoes;
   }
 }

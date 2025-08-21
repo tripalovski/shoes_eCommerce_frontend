@@ -1,0 +1,22 @@
+<!-- Sidebar -->
+<div class="card p-3">
+    <h5>Filters</h5>
+    <hr>
+
+    <!-- Price filter -->
+    <label class="form-label">Max Price</label>
+    <input type="range" class="form-range" min="5000" max="30000" [(ngModel)]="maxPrice" (change)="applyFilter()" />
+    <p>Maximum price: {{ maxPrice }} RSD</p>
+
+    <!-- Brand filter -->
+    <label class="form-label mt-2">Brand</label>
+    <select class="form-select" [(ngModel)]="selectedBrand" (change)="applyFilter()">
+        <option value="">All</option>
+
+        @for (brand of brands; track $index) {
+        <option [value]="brand">{{ brand }}</option>
+        }
+    </select>
+
+    <ng-content></ng-content>
+</div>

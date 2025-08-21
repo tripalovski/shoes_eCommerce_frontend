@@ -2,32 +2,19 @@
   <div class="row">
     <!-- Sidebar -->
     <div class="col-md-3">
-      <div class="card p-3">
-        <h5>Filters</h5>
-        <hr>
-
-        <!-- Price filter -->
-        <label class="form-label">Max Price</label>
-        <input type="range" class="form-range" min="5000" max="30000" [(ngModel)]="maxPrice" (change)="applyFilter()" />
-        <p>Maximum price: {{ maxPrice }} RSD</p>
-
-        <!-- Brand filter -->
-        <label class="form-label mt-2">Brand</label>
-        <select class="form-select" [(ngModel)]="selectedBrand" (change)="applyFilter()">
-          <option value="">All</option>
-
-          @for (brand of brands; track $index) {
-          <option [value]="brand">{{ brand }}</option>
-          }
-        </select>
-
-        <!-- Add button -->
-        <button class="btn btn-success mt-3 w-100" data-bs-toggle="modal" data-bs-target="#createModal"
-          (click)="openCreateModal()">
-          + Add Shoe
-        </button>
-      </div>
+          <!-- Sidebar -->
+        <app-filter-footwear-sidebar
+            [shoes]="shoes"
+            (filterShoes)="applyFilter($event)"
+        >   
+            <!-- Add New Footwear button -->
+            <button class="btn btn-success mt-3 w-100" data-bs-toggle="modal" data-bs-target="#createModal"
+                (click)="openCreateModal()">
+                + Add Shoe
+            </button>       
+        </app-filter-footwear-sidebar>
     </div>
+
 
     <!-- Products list -->
     <div class="col-md-9">
