@@ -6,6 +6,7 @@
           <!-- Sidebar -->
         <app-filter-footwear-sidebar
             [shoes]="shoes"
+            [brands]="brands"
             (filterShoes)="applyFilter($event)"
         >   
             <!-- Add New Footwear button -->
@@ -24,8 +25,8 @@
         >
         </app-footwear-display-list>
         <ng-template #buttonsTemplate let-shoe>
-            <button class="btn btn-danger w-100" (click)="deleteShoe(shoe.id)">Delete</button>
             <button class="btn btn-warning w-100 mb-2" (click)="openEditModal(shoe)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+            <button class="btn btn-danger w-100" (click)="deleteShoe(shoe.id)">Delete</button>
         </ng-template>
     </div>
     

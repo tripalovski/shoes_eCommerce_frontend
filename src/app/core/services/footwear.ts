@@ -3,7 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { ServiceConstants } from '../constants/ServiceConstants';
-import { Footwear} from '../models/Footwear.model';
+import { CreateFootwearDto, Footwear, UpdateFootwearDto} from '../models/Footwear.model';
+import { SelectBrandDto } from '../models/Brand.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,16 +24,20 @@ export class FootwearService {
   }
 
   // PUT
-  createFootwear(footWear: Footwear): Observable<Footwear> {
-    const {id, ...data} = footWear;
+  createFootwear(data: CreateFootwearDto): Observable<Footwear> {
     return this.http.post<Footwear>(ServiceConstants.API_METHODS.FOOTWEAR.CREATE, data);
   }
 
-  updateFootwear(id: number, data: Footwear): Observable<Footwear> {
+  updateFootwear(id: number, data: UpdateFootwearDto): Observable<Footwear> {
     return this.http.put<Footwear>(ServiceConstants.API_METHODS.FOOTWEAR.UPDATE(id), data);
   }
 
   deleteFootwear(id: number): Observable<void> {
     return this.http.delete<void>(ServiceConstants.API_METHODS.FOOTWEAR.DELETE(id));
+  }
+
+  // GET Brand list
+  getBrandList(): Observable<SelectBrandDto[]> {
+    return this.http.get<SelectBrandDto[]>(ServiceConstants.API_METHODS.FOOTWEAR.GET_BRAND_LIST);
   }
 }

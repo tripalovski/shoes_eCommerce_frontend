@@ -5,3 +5,5 @@ export interface Brand {
   description: string;
   website: string;
 }
+
+export type SelectBrandDto = Pick<Brand, "id" | "name">;

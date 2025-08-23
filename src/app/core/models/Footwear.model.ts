@@ -9,3 +9,11 @@ export interface Footwear {
   description: string;
   imageUrl: string;
 }
+
+export type CreateFootwearDto = Omit<Footwear, "id" | "brand"> & {
+  brandId: number;
+}
+
+export type UpdateFootwearDto = Omit<Footwear, "brand"> & {
+  brandId: number;
+}

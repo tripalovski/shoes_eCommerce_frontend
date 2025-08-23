@@ -4,7 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { CreateShoeModal } from './create-shoe-modal/create-shoe-modal';
 import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 import { FootwearDisplayList } from "../../shared/components/footwear-display-list/footwear-display-list";
-import { Footwear } from '../../core/models/Footwear.model';
+import { CreateFootwearDto, Footwear, UpdateFootwearDto } from '../../core/models/Footwear.model';
+import { SelectBrandDto } from '../../core/models/Brand.model';
 
 @Component({
   selector: 'app-admin',
@@ -13,21 +14,30 @@ import { Footwear } from '../../core/models/Footwear.model';
   styleUrl: './admin.css'
 })
 export class Admin {
+  footwearService = inject(FootwearService)
+
+
   maxPrice: number = 30000;
-  selectedBrand: string = '';
-
-  brands: string[] = ['Nike', 'Adidas', 'Puma', 'New Balance'];
-
   shoes: Footwear[] = []; // all footwears
   filteredShoes: Footwear[] = [];
-
+  brands: SelectBrandDto[] = [];
   
-  footwearService = inject(FootwearService)
 
   ngOnInit(): void {
     this.loadShoes();
+    this.loadBrands();
   }
 
+  loadBrands(){
+    this.footwearService.getBrandList().subscribe({
+      next: (res: SelectBrandDto[]) => {
+        this.brands = res;  
+      },
+      error: () => {
+        alert('Something went wrong while loading footwear.');
+      }
+    }); 
+  }
 
   // Load all footwear
   loadShoes(): void {
@@ -85,7 +95,11 @@ export class Admin {
       return;
     }
 
-    this.footwearService.createFootwear(this.formShoe).subscribe({
+    const {id, brand, ...createFootwear} = this.formShoe;
+    const brandId: number = this.brands.find(b => b.name === brand)!.id;
+    const createFootwearDto: CreateFootwearDto = {...createFootwear, brandId}
+
+    this.footwearService.createFootwear(createFootwearDto).subscribe({
       next: () => {
         this.loadShoes();
       },
@@ -104,7 +118,11 @@ export class Admin {
 
   editShoe(): void {
     if (this.formShoe) {
-      this.footwearService.updateFootwear(this.formShoe.id, this.formShoe).subscribe({
+      const {brand, ...updateFootwear} = this.formShoe
+      const brandId = this.brands.find(b => b.name === brand)!.id;
+      const updateFootwearDto: UpdateFootwearDto = {...updateFootwear, brandId}
+
+      this.footwearService.updateFootwear(updateFootwearDto.id, updateFootwearDto).subscribe({
         next: () => {
           console.log('Updated shoe:', this.formShoe);
           this.loadShoes();
