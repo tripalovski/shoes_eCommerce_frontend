@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Our Brands</h2>
+
+    <!-- Add button -->
+    <button
+        class="btn btn-primary mb-3"
+        data-bs-toggle="modal"
+        data-bs-target="#createModal"
+        (click)="openCreateModal()"
+    >
+        + Add New Brand
+    </button>
+
+    <app-brand-display-list
+        [brands]="brands"
+        [contentTemplate]="buttonsTemplate"
+    ></app-brand-display-list>
+
+    <ng-template #buttonsTemplate let-brand>
+        <button class="btn btn-warning w-100 mb-2" (click)="openEditModal(brand)" data-bs-toggle="modal" data-bs-target="#editModal">Edit</button>
+        <button class="btn btn-danger w-100" (click)="deleteBrand(brand.id)">Delete</button>
+    </ng-template>
+
+
+    <app-form-brand-modal
+        modalId="createModal"
+        [formBrand]="formBrand"
+        modalTitle="Create New Brand"
+        (save)="createBrand()"
+    ></app-form-brand-modal>
+
+    <app-form-brand-modal
+        modalId="editModal"
+        [formBrand]="formBrand"
+        modalTitle="Edit Brand"
+        (save)="editBrand()"
+    ></app-form-brand-modal>
+
+</div>

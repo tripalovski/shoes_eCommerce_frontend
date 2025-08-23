@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { CreateFootwearDto } from '../../../core/models/Footwear.model';
+import { Footwear } from '../../../core/models/Footwear.model';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -11,7 +11,7 @@ import { FormsModule } from '@angular/forms';
 export class CreateShoeModal {
   @Input() idModal: string = "id modal";
   @Input() modalTitle: string = "modal title";
-  @Input() formShoe: CreateFootwearDto = {} as CreateFootwearDto;
+  @Input() formShoe: Footwear = {} as Footwear;
   @Output() save = new EventEmitter<void>();
 
   onSave() {

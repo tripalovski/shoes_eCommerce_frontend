@@ -7,6 +7,8 @@
                 <h5 class="card-title">{{ shoe.name }}</h5>
                 <p class="card-text">{{ shoe.brand }}</p>
                 <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
+
+                <!-- to allow use of shoes to outside buttons -->
                 <ng-container 
                     *ngTemplateOutlet="contentTemplate; context: { $implicit: shoe }"
                 ></ng-container>

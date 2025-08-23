@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { ServiceConstants } from '../constants/ServiceConstants';
-import { CreateFootwearDto, Footwear} from '../models/Footwear.model';
+import { Footwear} from '../models/Footwear.model';
 
 @Injectable({
   providedIn: 'root'
