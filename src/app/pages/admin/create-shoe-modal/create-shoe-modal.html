@@ -14,7 +14,11 @@
 
         <!-- Brand -->
         <label class="form-label">Brand</label>
-        <input class="form-control mb-2" [(ngModel)]="formShoe.brand" placeholder="e.g. Nike" />
+        <select class="form-select" [(ngModel)]="formShoe.brand">
+          @for (brand of brands; track $index) {
+            <option [value]="brand.name">{{brand.name}}</option>
+          }
+        </select>
 
         <!-- Color -->
         <label class="form-label">Color</label>

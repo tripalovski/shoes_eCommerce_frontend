@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { environment } from '../../../environments/environment.development';
 import { ServiceConstants } from '../constants/ServiceConstants';
 import { CreateFootwearDto, Footwear, UpdateFootwearDto} from '../models/Footwear.model';
 import { SelectBrandDto } from '../models/Brand.model';

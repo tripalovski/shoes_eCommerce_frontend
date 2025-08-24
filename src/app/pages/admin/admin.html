@@ -38,6 +38,7 @@
     idModal="createModal"
     modalTitle="Add New Footwear"
     [formShoe]="formShoe"
+    [brands]="brands"
     (save)="createShoe()"
 ></app-create-shoe-modal>
 
@@ -45,5 +46,6 @@
     idModal="editModal"
     modalTitle="Edit Footwear"
     [formShoe]="formShoe"
+    [brands]="brands"
     (save)="editShoe()"
 ></app-create-shoe-modal>
