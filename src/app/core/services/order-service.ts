@@ -1,13 +1,18 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { CartItem } from '../models/Footwear.model';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { OrderDto, OrderItemDto } from '../../pages/Shop/DTOs/OrderDto';
+import { ServiceConstants } from '../constants/ServiceConstants';
+import { HttpClient } from '@angular/common/http';
+import { CartItem } from '../models/CartItem';
+import { OrderDisplayDto } from '../../pages/admin-orders/DTOs/OrderDto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class OrderService {
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
   cart$ = this.cartSubject.asObservable();
+  http = inject(HttpClient)
 
   constructor() {
     this.loadCartFromLocalStorage();
@@ -65,4 +70,19 @@ export class CartService {
   getTotal(): number {
     return this.cartSubject.getValue().reduce((total, item) => total + (item.price * item.quantity), 0);
   }
+
+  checkout(): Observable<any> {
+    const currentCart = this.cartSubject.getValue();
+    // clear
+    
+    const orderItems: OrderItemDto[] = currentCart.map(item => ({
+      footwearId: item.id,
+      quantity: item.quantity
+    }));
+
+    const orderDto: OrderDto = { items: orderItems };
+
+    return this.http.post(ServiceConstants.API_METHODS.ORDER.CREATE, orderDto);
+  }
+
 }

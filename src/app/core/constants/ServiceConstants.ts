@@ -4,6 +4,7 @@ import { environment } from "../../../environments/environment.development";
 const API_BASE = environment.apiUrl;
 const FOOTWEAR = API_BASE +  'footwear/';
 const BRAND = API_BASE + 'brand/';
+const ORDER = API_BASE + 'order/';
 
 export const ServiceConstants = {
 
@@ -23,5 +24,8 @@ export const ServiceConstants = {
             UPDATE: (id: number) => BRAND + "updateBrand/" + id,
             DELETE: (id: number) => BRAND + "deleteBrand/" + id
         },
+        ORDER:{
+            CREATE: ORDER + "createOrder",
+        }
     },
 }

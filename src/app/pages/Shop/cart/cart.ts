@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { CartService } from '../../../core/services/cart-service';
 import { AsyncPipe } from '@angular/common';
+import { OrderService } from '../../../core/services/order-service';
 
 @Component({
   selector: 'app-cart',
@@ -9,13 +9,21 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './cart.css'
 })
 export class Cart {
-  cartService = inject(CartService);
+  orderService = inject(OrderService);
 
   
   checkout(): void {
-    if (this.cartService.getTotal() > 0) {
+    if (this.orderService.getTotal() > 0) {
       alert('Kupovina završena!');
-      this.cartService.clearCart();
+      this.orderService.checkout().subscribe({
+        next: () => {
+          this.orderService.clearCart();
+        },
+        error: (err) => {
+          console.error('Error checkouting cart', err);
+          alert('Checkouting failed. Check console for details.');
+        }
+      });
     } else {
       alert('Korpa je prazna.');
     }

@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { CartItem, Footwear } from '../../../core/models/Footwear.model';
+import { Footwear } from '../../../core/models/Footwear.model';
 import { FootwearService } from '../../../core/services/footwear';
 import { FilterFootwearSidebar } from "../../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 import { FootwearDisplayList } from "../../../shared/components/footwear-display-list/footwear-display-list";
-import { CartService } from '../../../core/services/cart-service';
 import { AsyncPipe } from '@angular/common';
 import { SelectBrandDto } from '../../../core/models/Brand.model';
 import { Cart } from "../cart/cart";
+import { CartItem } from '../../../core/models/CartItem';
+import { OrderService } from '../../../core/services/order-service';
 
 @Component({
   selector: 'app-shop',
@@ -24,7 +25,7 @@ export class Shop {
   showCart: boolean = false;
 
   footwearService = inject(FootwearService)
-  cartService = inject(CartService);
+  orderService = inject(OrderService);
 
   ngOnInit(): void {
     this.loadShoes();
@@ -65,7 +66,7 @@ export class Shop {
       price: footwear.price,
       quantity: 0
     }
-    this.cartService.addItem(cartItem, 1);
+    this.orderService.addItem(cartItem, 1);
     alert(`${footwear.name} dodat/a u korpu!`);
   }
 }
