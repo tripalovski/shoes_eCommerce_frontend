@@ -17,3 +17,7 @@ export type CreateFootwearDto = Omit<Footwear, "id" | "brand"> & {
 export type UpdateFootwearDto = Omit<Footwear, "brand"> & {
   brandId: number;
 }
+
+export type CartItem = Pick<Footwear, "id" | "name" | "price"> & {
+  quantity: number;
+}
