@@ -85,4 +85,7 @@ export class OrderService {
     return this.http.post(ServiceConstants.API_METHODS.ORDER.CREATE, orderDto);
   }
 
+    getOrders(): Observable<OrderDisplayDto[]> {
+      return this.http.get<OrderDisplayDto[]>(ServiceConstants.API_METHODS.ORDER.GET_ALL);
+    }
 }

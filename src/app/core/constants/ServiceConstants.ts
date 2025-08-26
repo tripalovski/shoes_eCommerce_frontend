@@ -26,6 +26,7 @@ export const ServiceConstants = {
         },
         ORDER:{
             CREATE: ORDER + "createOrder",
+            GET_ALL: ORDER + "getAllOrders",
         }
     },
 }

@@ -3,6 +3,7 @@ import { Shop } from './pages/Shop/shop/shop';
 import { Admin } from './pages/admin/admin';
 import { BrandList } from './pages/brand-list/brand-list';
 import { AdminBrand } from './pages/admin-brand/admin-brand';
+import { AdminOrders } from './pages/admin-orders/admin-orders';
 
 export const routes: Routes = [
         {
@@ -28,5 +29,9 @@ export const routes: Routes = [
     {
         path:'admin-brands', 
         component: AdminBrand
+    },
+    {
+        path:'admin-orders', 
+        component: AdminOrders
     },
 ];
