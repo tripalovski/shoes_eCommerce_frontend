@@ -1,7 +1,7 @@
 import { Component, inject } from '@angular/core';
-import { OrderDisplayDto } from './DTOs/OrderDto';
 import { OrderService } from '../../core/services/order-service';
 import { CurrencyPipe, DatePipe } from '@angular/common';
+import { Order } from '../../core/models/Order.model';
 
 @Component({
   selector: 'app-admin-orders',
@@ -10,7 +10,7 @@ import { CurrencyPipe, DatePipe } from '@angular/common';
   styleUrl: './admin-orders.css'
 })
 export class AdminOrders {
-  orders: OrderDisplayDto[] = [];
+  orders: Order[] = [];
   isLoading = true;
 
   private orderService = inject(OrderService);

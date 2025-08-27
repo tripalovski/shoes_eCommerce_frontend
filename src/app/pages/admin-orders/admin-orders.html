@@ -11,7 +11,7 @@
         @for (order of orders; track $index) {
             <div class="card mb-3">
                 <div class="card-header">
-                Narudžbina #{{ order.id }} - Datum: {{ order.orderDate | date:'short' }}
+                Narudžbina #{{ order.id }} - Datum: {{ order.orderDate | date:'short' }} | Status: {{ order.orderStatus }}
                 </div>
                 <div class="card-body">
                 <ul class="list-group list-group-flush">

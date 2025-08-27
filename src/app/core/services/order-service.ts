@@ -1,10 +1,12 @@
 import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { OrderDto, OrderItemDto } from '../../pages/Shop/DTOs/OrderDto';
 import { ServiceConstants } from '../constants/ServiceConstants';
 import { HttpClient } from '@angular/common/http';
 import { CartItem } from '../models/CartItem';
 import { OrderDisplayDto } from '../../pages/admin-orders/DTOs/OrderDto';
+import { Order } from '../models/Order.model';
+import { OrderMapper } from '../mappers/Order.mapper';
 
 @Injectable({
   providedIn: 'root'
@@ -73,7 +75,6 @@ export class OrderService {
 
   checkout(): Observable<any> {
     const currentCart = this.cartSubject.getValue();
-    // clear
     
     const orderItems: OrderItemDto[] = currentCart.map(item => ({
       footwearId: item.id,
@@ -85,7 +86,9 @@ export class OrderService {
     return this.http.post(ServiceConstants.API_METHODS.ORDER.CREATE, orderDto);
   }
 
-    getOrders(): Observable<OrderDisplayDto[]> {
-      return this.http.get<OrderDisplayDto[]>(ServiceConstants.API_METHODS.ORDER.GET_ALL);
+    getOrders(): Observable<Order[]> {
+      return this.http.get<OrderDisplayDto[]>(ServiceConstants.API_METHODS.ORDER.GET_ALL).pipe(
+        map(dtos => dtos.map(dto => OrderMapper.toModal(dto)))
+      );
     }
 }
