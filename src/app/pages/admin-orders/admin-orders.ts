@@ -1,17 +1,20 @@
 import { Component, inject } from '@angular/core';
 import { OrderService } from '../../core/services/order-service';
-import { CurrencyPipe, DatePipe } from '@angular/common';
+import { OrderStatus } from '../../core/enums/OrderStatus';
 import { Order } from '../../core/models/Order.model';
+import { OrderDisplay } from '../../shared/components/order-display/order-display';
+import { IOrderStatusUpdate } from './interfaces/IOrderStatusUpdate.interface';
 
 @Component({
   selector: 'app-admin-orders',
-  imports: [DatePipe, CurrencyPipe],
+  imports: [ OrderDisplay],
   templateUrl: './admin-orders.html',
   styleUrl: './admin-orders.css'
 })
 export class AdminOrders {
   orders: Order[] = [];
   isLoading = true;
+  public readonly OrderStatus = OrderStatus;
 
   private orderService = inject(OrderService);
 
@@ -30,5 +33,35 @@ export class AdminOrders {
         this.isLoading = false;
       }
     });
+  }
+
+  updateStatus(orderId: number, status: OrderStatus){
+    const statusUpdate: IOrderStatusUpdate = {
+      id: orderId,
+      status: status
+    }    
+    this.orderService.updateStatus( statusUpdate).subscribe({
+      next: () => {
+        console.log("Status is updated");
+        this.getOrders();
+      },
+      error(err){
+        console.log("Error: status isnt updated");
+      }
+    });
+  }
+
+  deleteOrder(id: number): void {
+    if (confirm('Jeste li sigurni da želite obrisati ovu narudžbinu?')) {
+      this.orderService.deleteOrder(id).subscribe({
+        next: () => {
+          this.orders = this.orders.filter(order => order.id !== id);
+          console.log('Narudžbina uspešno obrisana.');
+        },
+        error: (err) => {
+          console.error('Došlo je do greške prilikom brisanja narudžbine:', err);
+        }
+      });
+    }
   }
 }

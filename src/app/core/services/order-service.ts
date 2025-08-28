@@ -7,14 +7,17 @@ import { CartItem } from '../models/CartItem';
 import { OrderDisplayDto } from '../../pages/admin-orders/DTOs/OrderDto';
 import { Order } from '../models/Order.model';
 import { OrderMapper } from '../mappers/Order.mapper';
+import { OrderStatusUpdateDto } from '../dtos/OrderStatusUpdateDto';
+import { IOrderStatusUpdate } from '../../pages/admin-orders/interfaces/IOrderStatusUpdate.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrderService {
+  http = inject(HttpClient)
+
   private cartSubject = new BehaviorSubject<CartItem[]>([]);
   cart$ = this.cartSubject.asObservable();
-  http = inject(HttpClient)
 
   constructor() {
     this.loadCartFromLocalStorage();
@@ -86,9 +89,21 @@ export class OrderService {
     return this.http.post(ServiceConstants.API_METHODS.ORDER.CREATE, orderDto);
   }
 
-    getOrders(): Observable<Order[]> {
-      return this.http.get<OrderDisplayDto[]>(ServiceConstants.API_METHODS.ORDER.GET_ALL).pipe(
-        map(dtos => dtos.map(dto => OrderMapper.toModal(dto)))
-      );
-    }
+
+  // HTTP Requests
+
+  getOrders(): Observable<Order[]> {
+    return this.http.get<OrderDisplayDto[]>(ServiceConstants.API_METHODS.ORDER.GET_ALL).pipe(
+      map(dtos => dtos.map(dto => OrderMapper.toModal(dto)))
+    );
+  }
+
+  updateStatus(statusUpdate: IOrderStatusUpdate){
+    const statusUpdateDto: OrderStatusUpdateDto = OrderMapper.StatusUpdateToDto(statusUpdate);
+    return this.http.patch(ServiceConstants.API_METHODS.ORDER.PATCH_STATUS(statusUpdateDto.id), statusUpdateDto);
+  } 
+
+  deleteOrder(orderId: number): Observable<any> {
+      return this.http.delete(ServiceConstants.API_METHODS.ORDER.DELETE(orderId));
+  }
 }

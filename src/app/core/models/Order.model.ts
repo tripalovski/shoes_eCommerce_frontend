@@ -9,7 +9,7 @@ export interface OrderItem {
 
 export interface Order {
   id: number;
-  orderDate: string;
-  orderStatus: OrderStatus;
+  createdAtDate: string;
+  status: OrderStatus;
   items: OrderItem[];
 }

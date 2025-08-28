@@ -9,23 +9,29 @@
   @else{
     @if(orders.length > 0){
         @for (order of orders; track $index) {
-            <div class="card mb-3">
-                <div class="card-header">
-                Narudžbina #{{ order.id }} - Datum: {{ order.orderDate | date:'short' }} | Status: {{ order.orderStatus }}
-                </div>
-                <div class="card-body">
-                <ul class="list-group list-group-flush">
-                    @for (item of order.items; track $index) {
-                        <li class="list-group-item">
-                            <p>
-                                **{{ item.name }}** - {{ item.price | currency:'EUR':'symbol' }} x {{ item.quantity }} =
-                                <span class="fw-bold">{{ item.price * item.quantity | currency:'EUR':'symbol' }}</span>
-                            </p>
-                        </li>
-                    }
-                </ul>
-                </div>
-            </div>
+            @if(order.status == OrderStatus.Pending){
+                <app-order-display
+                    [contentTemplate]="pendingOptions"
+                    [order]="order"
+                >
+                </app-order-display>
+                <ng-template #pendingOptions let-order>
+                    <button (click)="updateStatus(order.id, OrderStatus.Accepted)">Accept</button>
+                    <button (click)="updateStatus(order.id, OrderStatus.Denied)">Deny</button>
+                </ng-template>
+            }
+        }
+        @for (order of orders; track $index) {
+            @if(order.status == OrderStatus.Accepted || order.status == OrderStatus.Denied){
+                <app-order-display
+                    [contentTemplate]="completedOptions"
+                    [order]="order"
+                >
+                </app-order-display>
+                <ng-template #completedOptions let-order>
+                    <button (click)="deleteOrder(order.id)">Delete</button>
+                </ng-template>
+            }
         }
     }
     @else {

@@ -7,14 +7,13 @@ export interface OrderItemDisplayDto {
 
 export interface OrderDisplayDto {
   id: number;
-  orderDate: string;
-  orderStatus: OrderStatus;
+  createdAtDate: string;
+  status: OrderStatusDto;
   items: OrderItemDisplayDto[];
 }
 
-export enum OrderStatus {
+export enum OrderStatusDto {
   Pending = 0,
-  Shipped = 1,
-  Delivered = 2,
-  Denied = 3
+  Accepted = 1,
+  Denied = 2
 }
