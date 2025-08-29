@@ -1,7 +1,9 @@
 import { OrderDisplayDto, OrderStatusDto } from "../../pages/admin-orders/DTOs/OrderDto";
 import { IOrderStatusUpdate } from "../../pages/admin-orders/interfaces/IOrderStatusUpdate.interface";
+import { OrderItemDto } from "../../pages/Shop/DTOs/OrderDto";
 import { OrderStatusUpdateDto } from "../dtos/OrderStatusUpdateDto";
 import { OrderStatus } from "../enums/OrderStatus";
+import { CartItem } from "../models/CartItem";
 import { Order } from "../models/Order.model";
 
 
@@ -45,6 +47,13 @@ export class OrderMapper{
                 return OrderStatusDto.Accepted;
             default:
                 throw new Error("Unknown status");
+        }
+    }
+
+    public static toItemDto(cartItem: CartItem): OrderItemDto{
+        return {
+            footwearId: cartItem.id,
+            quantity: cartItem.quantity
         }
     }
 }

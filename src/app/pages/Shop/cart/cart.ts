@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { AsyncPipe } from '@angular/common';
+import { CartService } from '../../../core/services/cart-service';
 import { OrderService } from '../../../core/services/order-service';
 
 @Component({
@@ -9,15 +10,16 @@ import { OrderService } from '../../../core/services/order-service';
   styleUrl: './cart.css'
 })
 export class Cart {
+  cartService = inject(CartService);
   orderService = inject(OrderService);
 
   
   checkout(): void {
-    if (this.orderService.getTotal() > 0) {
+    if (this.cartService.getTotal() > 0) {
       alert('Kupovina završena!');
       this.orderService.checkout().subscribe({
         next: () => {
-          this.orderService.clearCart();
+          this.cartService.clearCart();
         },
         error: (err) => {
           console.error('Error checkouting cart', err);

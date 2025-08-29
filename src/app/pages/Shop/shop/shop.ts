@@ -7,8 +7,8 @@ import { FootwearDisplayList } from "../../../shared/components/footwear-display
 import { AsyncPipe } from '@angular/common';
 import { Cart } from "../cart/cart";
 import { CartItem } from '../../../core/models/CartItem';
-import { OrderService } from '../../../core/services/order-service';
 import { IBrandName } from '../../../shared/interfaces/ISelectedBrand.interface';
+import { CartService } from '../../../core/services/cart-service';
 
 @Component({
   selector: 'app-shop',
@@ -25,7 +25,7 @@ export class Shop {
   showCart: boolean = false;
 
   footwearService = inject(FootwearService)
-  orderService = inject(OrderService);
+  cartService = inject(CartService);
 
   ngOnInit(): void {
     this.loadShoes();
@@ -66,7 +66,7 @@ export class Shop {
       price: footwear.price,
       quantity: 0
     }
-    this.orderService.addItem(cartItem, 1);
+    this.cartService.addItem(cartItem, 1);
     alert(`${footwear.name} dodat/a u korpu!`);
   }
 }
