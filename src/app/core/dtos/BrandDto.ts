@@ -7,3 +7,5 @@ export interface BrandDto {
 }
 
 export type CreateBrandDto = Omit<BrandDto, "id">;
+
+export type BrandNameDto = Pick<BrandDto, "id" | "name">;

@@ -4,8 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { CreateShoeModal } from './create-shoe-modal/create-shoe-modal';
 import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 import { FootwearDisplayList } from "../../shared/components/footwear-display-list/footwear-display-list";
-import { CreateFootwearDto, Footwear, UpdateFootwearDto } from '../../core/models/Footwear.model';
-import { ISelectBrand } from '../../shared/interfaces/ISelectedBrand.interface';
+import { Footwear } from '../../core/models/Footwear.model';
+import { IBrandName } from '../../shared/interfaces/ISelectedBrand.interface';
+import { UpdateFootwearDto } from '../../core/dtos/FootwearDto';
 
 @Component({
   selector: 'app-admin',
@@ -20,7 +21,7 @@ export class Admin {
   maxPrice: number = 30000;
   shoes: Footwear[] = []; // all footwears
   filteredShoes: Footwear[] = [];
-  brands: ISelectBrand[] = [];
+  brands: IBrandName[] = [];
   
 
   ngOnInit(): void {
@@ -30,7 +31,7 @@ export class Admin {
 
   loadBrands(){
     this.footwearService.getBrandList().subscribe({
-      next: (res: ISelectBrand[]) => {
+      next: (res: IBrandName[]) => {
         this.brands = res;  
       },
       error: () => {
@@ -95,11 +96,8 @@ export class Admin {
       return;
     }
 
-    const {id, brand, ...createFootwear} = this.formShoe;
-    const brandId: number = this.brands.find(b => b.name === brand)!.id;
-    const createFootwearDto: CreateFootwearDto = {...createFootwear, brandId}
-
-    this.footwearService.createFootwear(createFootwearDto).subscribe({
+    const brandId: number = this.brands.find(b => b.name === this.formShoe.brand)!.id;
+    this.footwearService.createFootwear(this.formShoe, brandId).subscribe({
       next: () => {
         this.loadShoes();
       },
@@ -118,11 +116,9 @@ export class Admin {
 
   editShoe(): void {
     if (this.formShoe) {
-      const {brand, ...updateFootwear} = this.formShoe
-      const brandId = this.brands.find(b => b.name === brand)!.id;
-      const updateFootwearDto: UpdateFootwearDto = {...updateFootwear, brandId}
+      const brandId = this.brands.find(b => b.name === this.formShoe.brand)!.id;
 
-      this.footwearService.updateFootwear(updateFootwearDto.id, updateFootwearDto).subscribe({
+      this.footwearService.updateFootwear(this.formShoe, brandId).subscribe({
         next: () => {
           console.log('Updated shoe:', this.formShoe);
           this.loadShoes();

@@ -8,7 +8,7 @@ import { AsyncPipe } from '@angular/common';
 import { Cart } from "../cart/cart";
 import { CartItem } from '../../../core/models/CartItem';
 import { OrderService } from '../../../core/services/order-service';
-import { ISelectBrand } from '../../../shared/interfaces/ISelectedBrand.interface';
+import { IBrandName } from '../../../shared/interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-shop',
@@ -19,7 +19,7 @@ import { ISelectBrand } from '../../../shared/interfaces/ISelectedBrand.interfac
 export class Shop {
   maxPrice: number = 30000;
   selectedBrand: string = '';
-  brands: ISelectBrand[] = [];
+  brands: IBrandName[] = [];
   shoes: Footwear[] = [];         
   filteredShoes: Footwear[] = [];     
   showCart: boolean = false;
@@ -34,7 +34,7 @@ export class Shop {
 
   loadBrands(){
     this.footwearService.getBrandList().subscribe({
-      next: (res: ISelectBrand[]) => {
+      next: (res: IBrandName[]) => {
         this.brands = res;  
       },
       error: () => {

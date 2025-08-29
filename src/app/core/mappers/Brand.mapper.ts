@@ -1,4 +1,5 @@
-import { BrandDto, CreateBrandDto } from "../dtos/BrandDto";
+import { IBrandName } from "../../shared/interfaces/ISelectedBrand.interface";
+import { BrandDto, BrandNameDto, CreateBrandDto } from "../dtos/BrandDto";
 import { Brand } from "../models/Brand.model";
 
 export class BrandMapper{
@@ -28,6 +29,13 @@ export class BrandMapper{
             country: brand.country,
             description: brand.description,
             website: brand.website
+        }
+    }
+
+    public static toIBrandName(brandNameDto: BrandNameDto): IBrandName{
+        return {
+            id: brandNameDto.id,
+            name: brandNameDto.name
         }
     }
 }

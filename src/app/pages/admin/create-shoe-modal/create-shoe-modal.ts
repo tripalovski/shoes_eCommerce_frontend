@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Footwear } from '../../../core/models/Footwear.model';
 import { FormsModule } from '@angular/forms';
-import { ISelectBrand } from '../../../shared/interfaces/ISelectedBrand.interface';
+import { IBrandName } from '../../../shared/interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-create-shoe-modal',
@@ -13,7 +13,7 @@ export class CreateShoeModal {
   @Input() idModal: string = "id modal";
   @Input() modalTitle: string = "modal title";
   @Input() formShoe: Footwear = {} as Footwear;
-  @Input() brands: ISelectBrand[] = []
+  @Input() brands: IBrandName[] = []
   @Output() save = new EventEmitter<void>();
 
   onSave() {

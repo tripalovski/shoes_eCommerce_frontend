@@ -2,7 +2,7 @@ import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Footwear } from '../../../core/models/Footwear.model';
 import { FormsModule } from '@angular/forms';
 import { FootwearService } from '../../../core/services/footwear-service';
-import { ISelectBrand } from '../../interfaces/ISelectedBrand.interface';
+import { IBrandName } from '../../interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-filter-footwear-sidebar',
@@ -11,7 +11,7 @@ import { ISelectBrand } from '../../interfaces/ISelectedBrand.interface';
   styleUrl: './filter-footwear-sidebar.css'
 })
 export class FilterFootwearSidebar {
-  @Input() brands: ISelectBrand[] = [];
+  @Input() brands: IBrandName[] = [];
   @Input() 
     set shoes(value: Footwear[]) {
       this._shoes = value;
