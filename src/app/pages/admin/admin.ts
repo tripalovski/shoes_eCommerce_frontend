@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
-import { FootwearService } from '../../core/services/footwear';
+import { FootwearService } from '../../core/services/footwear-service';
 import { FormsModule } from '@angular/forms';
 import { CreateShoeModal } from './create-shoe-modal/create-shoe-modal';
 import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 import { FootwearDisplayList } from "../../shared/components/footwear-display-list/footwear-display-list";
 import { CreateFootwearDto, Footwear, UpdateFootwearDto } from '../../core/models/Footwear.model';
-import { SelectBrandDto } from '../../core/models/Brand.model';
+import { ISelectBrand } from '../../shared/interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-admin',
@@ -20,7 +20,7 @@ export class Admin {
   maxPrice: number = 30000;
   shoes: Footwear[] = []; // all footwears
   filteredShoes: Footwear[] = [];
-  brands: SelectBrandDto[] = [];
+  brands: ISelectBrand[] = [];
   
 
   ngOnInit(): void {
@@ -30,7 +30,7 @@ export class Admin {
 
   loadBrands(){
     this.footwearService.getBrandList().subscribe({
-      next: (res: SelectBrandDto[]) => {
+      next: (res: ISelectBrand[]) => {
         this.brands = res;  
       },
       error: () => {

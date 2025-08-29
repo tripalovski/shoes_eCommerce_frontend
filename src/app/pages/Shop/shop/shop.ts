@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Footwear } from '../../../core/models/Footwear.model';
-import { FootwearService } from '../../../core/services/footwear';
+import { FootwearService } from '../../../core/services/footwear-service';
 import { FilterFootwearSidebar } from "../../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
 import { FootwearDisplayList } from "../../../shared/components/footwear-display-list/footwear-display-list";
 import { AsyncPipe } from '@angular/common';
-import { SelectBrandDto } from '../../../core/models/Brand.model';
 import { Cart } from "../cart/cart";
 import { CartItem } from '../../../core/models/CartItem';
 import { OrderService } from '../../../core/services/order-service';
+import { ISelectBrand } from '../../../shared/interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-shop',
@@ -19,7 +19,7 @@ import { OrderService } from '../../../core/services/order-service';
 export class Shop {
   maxPrice: number = 30000;
   selectedBrand: string = '';
-  brands: SelectBrandDto[] = [];
+  brands: ISelectBrand[] = [];
   shoes: Footwear[] = [];         
   filteredShoes: Footwear[] = [];     
   showCart: boolean = false;
@@ -34,7 +34,7 @@ export class Shop {
 
   loadBrands(){
     this.footwearService.getBrandList().subscribe({
-      next: (res: SelectBrandDto[]) => {
+      next: (res: ISelectBrand[]) => {
         this.brands = res;  
       },
       error: () => {

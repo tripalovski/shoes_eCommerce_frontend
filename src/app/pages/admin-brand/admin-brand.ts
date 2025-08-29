@@ -56,7 +56,7 @@ export class AdminBrand {
 
   editBrand(): void {
     if (!this.formBrand) return;
-    this.brandService.updateBrand(this.formBrand.id, this.formBrand).subscribe({
+    this.brandService.updateBrand(this.formBrand).subscribe({
       next: () => this.loadBrands(),
       error: (err) => console.error('Error updating brand', err)
     });
@@ -64,8 +64,7 @@ export class AdminBrand {
 
 
   createBrand(): void{
-      const { id, ...newBrand } = this.formBrand;
-      this.brandService.createBrand(newBrand).subscribe({
+      this.brandService.createBrand(this.formBrand).subscribe({
         next: () => this.loadBrands(),
         error: (err) => console.error('Error creating brand', err)
       });
