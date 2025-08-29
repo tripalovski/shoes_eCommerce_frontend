@@ -106,4 +106,8 @@ export class OrderService {
   deleteOrder(orderId: number): Observable<any> {
       return this.http.delete(ServiceConstants.API_METHODS.ORDER.DELETE(orderId));
   }
+
+  removeItemFromOrder(orderId: number, footwearId: number){
+    return this.http.delete(ServiceConstants.API_METHODS.ORDER.DELETE_ITEM(orderId, footwearId));
+  }
 }

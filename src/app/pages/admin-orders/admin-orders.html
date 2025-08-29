@@ -11,20 +11,24 @@
         @for (order of orders; track $index) {
             @if(order.status == OrderStatus.Pending){
                 <app-order-display
-                    [contentTemplate]="pendingOptions"
+                    [orderOptionsTemplate]="pendingOptions"
+                    [itemTemplate]="itemTemplate"
                     [order]="order"
                 >
                 </app-order-display>
-                <ng-template #pendingOptions let-order>
+                <ng-template #pendingOptions let-order >
                     <button (click)="updateStatus(order.id, OrderStatus.Accepted)">Accept</button>
                     <button (click)="updateStatus(order.id, OrderStatus.Denied)">Deny</button>
+                </ng-template>
+                <ng-template #itemTemplate let-item="item" let-order="order" >
+                    <button (click)="removeItemFromOrder(order.id, item.footwearId)">Remove</button>
                 </ng-template>
             }
         }
         @for (order of orders; track $index) {
             @if(order.status == OrderStatus.Accepted || order.status == OrderStatus.Denied){
                 <app-order-display
-                    [contentTemplate]="completedOptions"
+                    [orderOptionsTemplate]="completedOptions"
                     [order]="order"
                 >
                 </app-order-display>

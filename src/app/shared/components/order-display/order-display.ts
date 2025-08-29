@@ -10,5 +10,6 @@ import { CurrencyPipe, DatePipe, NgTemplateOutlet } from '@angular/common';
 })
 export class OrderDisplay {
   @Input() order: Order = {} as Order;
-  @Input() contentTemplate!: TemplateRef<any>;
+  @Input() orderOptionsTemplate!: TemplateRef<any>;
+  @Input() itemTemplate!: TemplateRef<any>;
 }

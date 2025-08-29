@@ -28,7 +28,8 @@ export const ServiceConstants = {
             CREATE: ORDER + "createOrder",
             GET_ALL: ORDER + "getAllOrders",
             PATCH_STATUS: (id: number) => ORDER + "updateStatus/" + id,
-            DELETE: (id: number) => ORDER + "deleteOrder/" + id
+            DELETE: (id: number) => ORDER + "deleteOrder/" + id,
+            DELETE_ITEM: (orderId: number, footwearId: number) => ORDER + "deleteItem/" + orderId + "/" + footwearId,
         }
     },
 }

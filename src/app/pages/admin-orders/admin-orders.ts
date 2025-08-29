@@ -55,13 +55,23 @@ export class AdminOrders {
     if (confirm('Jeste li sigurni da želite obrisati ovu narudžbinu?')) {
       this.orderService.deleteOrder(id).subscribe({
         next: () => {
-          this.orders = this.orders.filter(order => order.id !== id);
-          console.log('Narudžbina uspešno obrisana.');
+          this.getOrders();
         },
         error: (err) => {
           console.error('Došlo je do greške prilikom brisanja narudžbine:', err);
         }
       });
     }
+  }
+
+  removeItemFromOrder(orderId: number, footwearId: number){
+    this.orderService.removeItemFromOrder(orderId, footwearId).subscribe({
+      next: () => {
+        this.getOrders();
+      },
+      error(err){
+        console.error("Error: item wasnt removed", err);
+      }
+    })
   }
 }

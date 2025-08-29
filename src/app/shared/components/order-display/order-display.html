@@ -1,21 +1,24 @@
 <div class="card mb-3">
         <div class="card-header d-flex justify-content-between align-items-center">
         <div>
-            Narudžbina #{{ order.id }} - Datum: {{ order.orderDate | date:'short' }} | Status: {{ order.status }}
+            Narudžbina #{{ order.id }} - Datum: {{ order.createdAtDate | date:'short' }} | Status: {{ order.status }}
         </div>
 
         <ng-container
-        *ngTemplateOutlet="contentTemplate; context: {$implicit: order}" >
+        *ngTemplateOutlet="orderOptionsTemplate; context: {$implicit: order}" >
         </ng-container>
     </div>
     <div class="card-body">
     <ul class="list-group list-group-flush">
         @for (item of order.items; track $index) {
-            <li class="list-group-item">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
                 <p>
                     **{{ item.name }}** - {{ item.price | currency:'EUR':'symbol' }} x {{ item.quantity }} =
                     <span class="fw-bold">{{ item.price * item.quantity | currency:'EUR':'symbol' }}</span>
                 </p>
+                <ng-container
+                *ngTemplateOutlet="itemTemplate; context: {item, order}"
+                ></ng-container>
             </li>
         }
     </ul>
