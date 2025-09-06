@@ -5,6 +5,7 @@ const API_BASE = environment.apiUrl;
 const FOOTWEAR = API_BASE +  'footwear/';
 const BRAND = API_BASE + 'brand/';
 const ORDER = API_BASE + 'order/';
+const AUTH = API_BASE + 'user/';
 
 export const ServiceConstants = {
 
@@ -30,6 +31,10 @@ export const ServiceConstants = {
             PATCH_STATUS: (id: number) => ORDER + "updateStatus/" + id,
             DELETE: (id: number) => ORDER + "deleteOrder/" + id,
             DELETE_ITEM: (orderId: number, footwearId: number) => ORDER + "deleteItem/" + orderId + "/" + footwearId,
+        },
+        AUTH:{
+            REGISTER: AUTH + "register/",
+            LOGIN: AUTH + "login/",
         }
     },
 }

@@ -4,34 +4,83 @@ import { Admin } from './pages/admin/admin';
 import { BrandList } from './pages/brand-list/brand-list';
 import { AdminBrand } from './pages/admin-brand/admin-brand';
 import { AdminOrders } from './pages/admin-orders/admin-orders';
+import { Register } from './pages/register/register';
+import { Login } from './pages/login/login';
+import { GuestUserNavbar } from './shared/components/guest-user-navbar/guest-user-navbar';
+import { UserNavbar } from './shared/components/user-navbar/user-navbar';
+import { AdminNavbar } from './shared/components/admin-navbar/admin-navbar';
 
 export const routes: Routes = [
-        {
-        path:'', 
-        redirectTo: 'home', 
-        pathMatch: 'full'},
-    // {
-    //     path:'home', 
-    //     component: 
-    // },   
     {
-        path:'shop', 
-        component: Shop
+    path:'', 
+    redirectTo: 'shop', 
+    pathMatch: 'full'
     },
     {
-        path:'admin', 
-        component: Admin
+        path: '',
+        component: GuestUserNavbar,
+        children:[
+            {
+                path:'shop', 
+                component: Shop
+            },
+            {
+                path:'brands', 
+                component: BrandList
+            },
+            {
+                path:'register', 
+                component: Register
+            },
+            {
+                path:'login', 
+                component: Login
+            },
+        ]  
     },
     {
-        path:'brands', 
-        component: BrandList
+        path: 'user',
+        component: UserNavbar,
+        children:[
+            {
+                path: '',
+                redirectTo: 'shop',
+                pathMatch: 'full'
+            },
+            {
+                path:'shop', 
+                component: Shop
+            },
+            {
+                path:'brands', 
+                component: BrandList
+            },
+            // My cart
+            // profile..
+        ]  
     },
     {
-        path:'admin-brands', 
-        component: AdminBrand
-    },
-    {
-        path:'admin-orders', 
-        component: AdminOrders
+        path: 'admin',
+        component: AdminNavbar,
+        children:[
+            {
+                path: '',
+                redirectTo: 'shop',
+                pathMatch: 'full'
+            },
+            {
+                path:'shop', 
+                component: Admin
+            },
+
+            {
+                path:'brands', 
+                component: AdminBrand
+            },
+            {
+                path:'orders', 
+                component: AdminOrders
+            },
+        ]  
     },
 ];
