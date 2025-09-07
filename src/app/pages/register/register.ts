@@ -4,6 +4,8 @@ import { AuthService } from '../../core/services/auth-service';
 import { IRegisterUser } from './IRegisterUser';
 import { LocalStorageConstants } from '../../core/constants/LocalStorageConstants';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { Role } from '../../core/enums/Role';
 
 // Custom validator function to check if passwords match
 export function passwordMatchValidator(): ValidatorFn {
@@ -38,7 +40,7 @@ export class Register {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', Validators.required]
-    }, { validators: passwordMatchValidator() }); // Apply custom validator at the form group level
+    }, { validators: passwordMatchValidator() });
   }
 
   ngOnInit(): void {}
@@ -48,9 +50,14 @@ export class Register {
       const user: IRegisterUser = this.registerForm.value;
       this.authService.register(user).subscribe({
         next: (tokenResponse) => {
-          localStorage.setItem(LocalStorageConstants.ACCESS_TOKEN, tokenResponse.accessToken)
-          console.log(tokenResponse.accessToken);
-          this.router.navigate(['/shop']);
+          const token = tokenResponse.accessToken;
+          localStorage.setItem(LocalStorageConstants.ACCESS_TOKEN, token)
+          const decodedToken: any = jwtDecode(token);
+          const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]          
+          
+          if(role === Role.user) this.router.navigate(['user']);
+          else if(role === Role.admin) this.router.navigate(['admin'])
+          else console.log("No such a role exists");  
         },
         error: (error) => {
           console.error('An error occurred during registration.', error);
@@ -58,7 +65,6 @@ export class Register {
       });
     } else {
       console.log('Form is invalid. Please check the entered data.');
-      // Mark all fields as touched to display validation messages
       this.registerForm.markAllAsTouched();
     }
   }

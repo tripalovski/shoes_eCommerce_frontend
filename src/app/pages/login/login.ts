@@ -4,6 +4,8 @@ import { AuthService } from '../../core/services/auth-service';
 import { ILoginUser } from './ILoginUser';
 import { LocalStorageConstants } from '../../core/constants/LocalStorageConstants';
 import { Router } from '@angular/router';
+import { jwtDecode } from 'jwt-decode';
+import { Role } from '../../core/enums/Role';
 
 @Component({
   selector: 'app-login',
@@ -31,8 +33,14 @@ export class Login {
       const user: ILoginUser = this.loginForm.value;
       this.authService.login(user).subscribe({
         next: (tokenResponse) => {
+          const token = tokenResponse.accessToken;
           localStorage.setItem(LocalStorageConstants.ACCESS_TOKEN, tokenResponse.accessToken);
-          this.router.navigate(['/shop']);
+          const decodedToken: any = jwtDecode(token);
+          const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]          
+          
+          if(role === Role.user) this.router.navigate(['user']);
+          else if(role === Role.admin) this.router.navigate(['admin'])
+          else console.log("No such a role exists");          
         },
         error: (error) => {
           console.error('Error while login: ', error);
