@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Brand } from '../../core/models/Brand.model';
-import { BrandService } from '../../core/services/brand-service';
-import { BrandDisplayList } from '../../shared/components/brand-display-list/brand-display-list';
 import { FormBrandModal } from "./form-brand-modal/form-brand-modal";
+import { BrandDisplayList } from '../../../shared/components/brand-display-list/brand-display-list';
+import { Brand } from '../../../core/models/Brand.model';
+import { BrandService } from '../../../core/services/brand-service';
 
 @Component({
   selector: 'app-admin-brand',

@@ -1,14 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { OrderDto, OrderItemDto } from '../../pages/Shop/DTOs/OrderDto';
 import { ServiceConstants } from '../constants/ServiceConstants';
 import { HttpClient } from '@angular/common/http';
-import { OrderDisplayDto } from '../../pages/admin-orders/DTOs/OrderDto';
+import { OrderDisplayDto, OrderDto, OrderItemDto } from '../dtos/OrderDto';
 import { Order } from '../models/Order.model';
 import { OrderMapper } from '../mappers/Order.mapper';
 import { OrderStatusUpdateDto } from '../dtos/OrderStatusUpdateDto';
-import { IOrderStatusUpdate } from '../../pages/admin-orders/interfaces/IOrderStatusUpdate.interface';
 import { CartService } from './cart-service';
+import { IOrderStatusUpdate } from '../../pages/Admin/admin-orders/IOrderStatusUpdate.interface';
 
 @Injectable({
   providedIn: 'root'

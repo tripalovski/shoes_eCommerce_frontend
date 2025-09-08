@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { OrderService } from '../../core/services/order-service';
-import { OrderStatus } from '../../core/enums/OrderStatus';
-import { Order } from '../../core/models/Order.model';
-import { OrderDisplay } from '../../shared/components/order-display/order-display';
-import { IOrderStatusUpdate } from './interfaces/IOrderStatusUpdate.interface';
+import { IOrderStatusUpdate } from './IOrderStatusUpdate.interface';
+import { OrderDisplay } from '../../../shared/components/order-display/order-display';
+import { Order } from '../../../core/models/Order.model';
+import { OrderStatus } from '../../../core/enums/OrderStatus';
+import { OrderService } from '../../../core/services/order-service';
 
 @Component({
   selector: 'app-admin-orders',

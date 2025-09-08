@@ -1,14 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Footwear } from '../../../core/models/Footwear.model';
-import { FootwearService } from '../../../core/services/footwear-service';
-import { FilterFootwearSidebar } from "../../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
-import { FootwearDisplayList } from "../../../shared/components/footwear-display-list/footwear-display-list";
+import { Footwear } from '../../core/models/Footwear.model';
+import { FootwearService } from '../../core/services/footwear-service';
+import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
+import { FootwearDisplayList } from "../../shared/components/footwear-display-list/footwear-display-list";
 import { AsyncPipe } from '@angular/common';
-import { Cart } from "../cart/cart";
-import { CartItem } from '../../../core/models/CartItem';
-import { IBrandName } from '../../../shared/interfaces/ISelectedBrand.interface';
-import { CartService } from '../../../core/services/cart-service';
+import { Cart } from "../../shared/components/cart/cart";
+import { CartItem } from '../../core/models/CartItem';
+import { IBrandName } from '../../shared/interfaces/ISelectedBrand.interface';
+import { CartService } from '../../core/services/cart-service';
 
 @Component({
   selector: 'app-shop',

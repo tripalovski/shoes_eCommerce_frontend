@@ -1,6 +1,5 @@
-import { OrderDisplayDto, OrderStatusDto } from "../../pages/admin-orders/DTOs/OrderDto";
-import { IOrderStatusUpdate } from "../../pages/admin-orders/interfaces/IOrderStatusUpdate.interface";
-import { OrderItemDto } from "../../pages/Shop/DTOs/OrderDto";
+import { IOrderStatusUpdate } from "../../pages/Admin/admin-orders/IOrderStatusUpdate.interface";
+import { OrderDisplayDto, OrderItemDto, OrderStatusDto } from "../dtos/OrderDto";
 import { OrderStatusUpdateDto } from "../dtos/OrderStatusUpdateDto";
 import { OrderStatus } from "../enums/OrderStatus";
 import { CartItem } from "../models/CartItem";

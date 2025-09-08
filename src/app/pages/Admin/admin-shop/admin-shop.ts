@@ -1,20 +1,19 @@
 import { Component, inject } from '@angular/core';
-import { FootwearService } from '../../core/services/footwear-service';
+import { FootwearService } from '../../../core/services/footwear-service';
+import { Footwear } from '../../../core/models/Footwear.model';
+import { IBrandName } from '../../../shared/interfaces/ISelectedBrand.interface';
 import { FormsModule } from '@angular/forms';
 import { CreateShoeModal } from './create-shoe-modal/create-shoe-modal';
-import { FilterFootwearSidebar } from "../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar";
-import { FootwearDisplayList } from "../../shared/components/footwear-display-list/footwear-display-list";
-import { Footwear } from '../../core/models/Footwear.model';
-import { IBrandName } from '../../shared/interfaces/ISelectedBrand.interface';
-import { UpdateFootwearDto } from '../../core/dtos/FootwearDto';
+import { FilterFootwearSidebar } from '../../../shared/components/filter-footwear-sidebar/filter-footwear-sidebar';
+import { FootwearDisplayList } from '../../../shared/components/footwear-display-list/footwear-display-list';
 
 @Component({
-  selector: 'app-admin',
+  selector: 'app-admin-shop',
   imports: [FormsModule, CreateShoeModal, FilterFootwearSidebar, FootwearDisplayList],
-  templateUrl: './admin.html',
-  styleUrl: './admin.css'
+  templateUrl: './admin-shop.html',
+  styleUrl: './admin-shop.css'
 })
-export class Admin {
+export class AdminShop {
   footwearService = inject(FootwearService)
 
 

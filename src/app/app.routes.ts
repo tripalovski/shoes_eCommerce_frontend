@@ -1,17 +1,17 @@
 import { Routes } from '@angular/router';
-import { Shop } from './pages/Shop/shop/shop';
-import { Admin } from './pages/admin/admin';
+import { Shop } from './pages/shop/shop';
 import { BrandList } from './pages/brand-list/brand-list';
-import { AdminBrand } from './pages/admin-brand/admin-brand';
-import { AdminOrders } from './pages/admin-orders/admin-orders';
 import { Register } from './pages/register/register';
 import { Login } from './pages/login/login';
 import { GuestUserNavbar } from './shared/components/guest-user-navbar/guest-user-navbar';
 import { UserNavbar } from './shared/components/user-navbar/user-navbar';
 import { AdminNavbar } from './shared/components/admin-navbar/admin-navbar';
-import { UserOrders } from './pages/user-orders/user-orders';
 import { authGuard } from './core/guards/auth-guard';
 import { Role } from './core/enums/Role';
+import { UserOrders } from './pages/User/user-orders/user-orders';
+import { AdminShop } from './pages/Admin/admin-shop/admin-shop';
+import { AdminBrand } from './pages/Admin/admin-brand/admin-brand';
+import { AdminOrders } from './pages/Admin/admin-orders/admin-orders';
 
 export const routes: Routes = [
     {
@@ -85,7 +85,7 @@ export const routes: Routes = [
             },
             {
                 path:'shop', 
-                component: Admin
+                component: AdminShop
             },
 
             {

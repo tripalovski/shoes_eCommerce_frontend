@@ -1,4 +1,4 @@
-import { OrderStatusDto } from "../../pages/admin-orders/DTOs/OrderDto";
+import { OrderStatusDto } from "./OrderDto";
 
 export interface OrderStatusUpdateDto{
     id: number,

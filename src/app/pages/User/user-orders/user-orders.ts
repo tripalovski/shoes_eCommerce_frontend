@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { Order } from '../../core/models/Order.model';
-import { OrderStatus } from '../../core/enums/OrderStatus';
-import { OrderService } from '../../core/services/order-service';
-import { OrderDisplay } from '../../shared/components/order-display/order-display';
+import { OrderDisplay } from '../../../shared/components/order-display/order-display';
+import { Order } from '../../../core/models/Order.model';
+import { OrderStatus } from '../../../core/enums/OrderStatus';
+import { OrderService } from '../../../core/services/order-service';
 
 @Component({
   selector: 'app-user-orders',
@@ -15,7 +15,13 @@ export class UserOrders {
   isLoading = true;
   public readonly OrderStatus = OrderStatus; // to be visible in html
 
-  private orderService = inject(OrderService);
+  private _orderService = inject(OrderService);
+  public get orderService() {
+    return this._orderService;
+  }
+  public set orderService(value) {
+    this._orderService = value;
+  }
 
   ngOnInit(): void {
     this.getUserOrders();

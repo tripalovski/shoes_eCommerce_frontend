@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Brand } from '../../../core/models/Brand.model';
 import { FormsModule } from '@angular/forms';
+import { Brand } from '../../../../core/models/Brand.model';
 
 @Component({
   selector: 'app-form-brand-modal',

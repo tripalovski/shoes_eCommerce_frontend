@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Footwear } from '../../../core/models/Footwear.model';
 import { FormsModule } from '@angular/forms';
-import { IBrandName } from '../../../shared/interfaces/ISelectedBrand.interface';
+import { Footwear } from '../../../../core/models/Footwear.model';
+import { IBrandName } from '../../../../shared/interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-create-shoe-modal',
