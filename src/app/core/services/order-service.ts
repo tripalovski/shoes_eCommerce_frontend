@@ -32,6 +32,12 @@ export class OrderService {
     );
   }
 
+  getUserOrders(): Observable<Order[]> {
+    return this.http.get<OrderDisplayDto[]>(ServiceConstants.API_METHODS.ORDER.GET_USER_ORDERS).pipe(
+      map(dtos => dtos.map(dto => OrderMapper.toModal(dto)))
+    );
+  }
+
   updateStatus(statusUpdate: IOrderStatusUpdate){
     const statusUpdateDto: OrderStatusUpdateDto = OrderMapper.StatusUpdateToDto(statusUpdate);
     return this.http.patch(ServiceConstants.API_METHODS.ORDER.PATCH_STATUS(statusUpdateDto.id), statusUpdateDto);
