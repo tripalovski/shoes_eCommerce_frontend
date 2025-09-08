@@ -32,18 +32,19 @@ export class Login {
     if (this.loginForm.valid) {
       const user: ILoginUser = this.loginForm.value;
       this.authService.login(user).subscribe({
-        next: (tokenResponse) => {
-          const token = tokenResponse.accessToken;
-          localStorage.setItem(LocalStorageConstants.ACCESS_TOKEN, tokenResponse.accessToken);
-          const decodedToken: any = jwtDecode(token);
-          const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]          
-          
-          if(role === Role.user) this.router.navigate(['user']);
-          else if(role === Role.admin) this.router.navigate(['admin'])
-          else console.log("No such a role exists");          
+        next: () => {
+          this.authService.userRole$.subscribe(role => {
+            if (role === Role.admin) {
+              this.router.navigate(['admin']);
+            } else if (role === Role.user) {
+              this.router.navigate(['user']);
+            } else {
+              console.warn('Unknown user role:', role);
+            }
+          });
         },
         error: (error) => {
-          console.error('Error while login: ', error);
+          console.error('Error while logging in:', error);
         }
       });
     } else {

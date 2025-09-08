@@ -9,6 +9,9 @@ import { Login } from './pages/login/login';
 import { GuestUserNavbar } from './shared/components/guest-user-navbar/guest-user-navbar';
 import { UserNavbar } from './shared/components/user-navbar/user-navbar';
 import { AdminNavbar } from './shared/components/admin-navbar/admin-navbar';
+import { UserOrders } from './pages/user-orders/user-orders';
+import { authGuard } from './core/guards/auth-guard';
+import { Role } from './core/enums/Role';
 
 export const routes: Routes = [
     {
@@ -41,6 +44,10 @@ export const routes: Routes = [
     {
         path: 'user',
         component: UserNavbar,
+        canActivate: [authGuard],
+        data: {
+            roles: [Role.user]
+        },
         children:[
             {
                 path: '',
@@ -55,6 +62,10 @@ export const routes: Routes = [
                 path:'brands', 
                 component: BrandList
             },
+            {
+                path:'myOrders', 
+                component: UserOrders
+            },
             // My cart
             // profile..
         ]  
@@ -62,6 +73,10 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminNavbar,
+        canActivate: [authGuard],
+        data: {
+            roles: [Role.admin]
+        },
         children:[
             {
                 path: '',

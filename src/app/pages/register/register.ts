@@ -49,18 +49,19 @@ export class Register {
     if (this.registerForm.valid) {
       const user: IRegisterUser = this.registerForm.value;
       this.authService.register(user).subscribe({
-        next: (tokenResponse) => {
-          const token = tokenResponse.accessToken;
-          localStorage.setItem(LocalStorageConstants.ACCESS_TOKEN, token)
-          const decodedToken: any = jwtDecode(token);
-          const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"]          
-          
-          if(role === Role.user) this.router.navigate(['user']);
-          else if(role === Role.admin) this.router.navigate(['admin'])
-          else console.log("No such a role exists");  
+        next: () => {
+          this.authService.userRole$.subscribe(role => {
+            if (role === Role.admin) {
+              this.router.navigate(['admin']);
+            } else if (role === Role.user) {
+              this.router.navigate(['user']);
+            } else {
+              console.warn('Unknown user role:', role);
+            }
+          });
         },
         error: (error) => {
-          console.error('An error occurred during registration.', error);
+          console.error('Error while Registering', error);
         }
       });
     } else {
