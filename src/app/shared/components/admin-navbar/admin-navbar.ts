@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { AuthService } from '../../../core/services/auth-service';
 
 @Component({
   selector: 'app-admin-navbar',
@@ -8,5 +9,11 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './admin-navbar.css'
 })
 export class AdminNavbar {
+  authService = inject(AuthService);
+  router = inject(Router)
 
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login'])
+  }
 }
