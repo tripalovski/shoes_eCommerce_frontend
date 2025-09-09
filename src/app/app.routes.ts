@@ -12,6 +12,7 @@ import { UserOrders } from './pages/User/user-orders/user-orders';
 import { AdminShop } from './pages/Admin/admin-shop/admin-shop';
 import { AdminBrand } from './pages/Admin/admin-brand/admin-brand';
 import { AdminOrders } from './pages/Admin/admin-orders/admin-orders';
+import { SingleFootwear } from './pages/single-footwear/single-footwear';
 
 export const routes: Routes = [
     {
@@ -26,6 +27,10 @@ export const routes: Routes = [
             {
                 path:'shop', 
                 component: Shop
+            },
+            {
+                path:'shop/:id', 
+                component: SingleFootwear
             },
             {
                 path:'brands', 

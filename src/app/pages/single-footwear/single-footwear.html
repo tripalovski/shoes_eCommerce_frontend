@@ -1,0 +1,35 @@
+@if(footwear){
+  <div class="row">
+    <div class="col-md-6 footwear-image-container">
+      <img [src]="footwear.imageUrl" [alt]="footwear.name" class="img-fluid" />
+    </div>
+
+    <div class="col-md-6 footwear-details-container">
+      <h1 class="footwear-name">{{ footwear.name }}</h1>
+      <p class="footwear-brand">{{ footwear.brand }}</p>
+
+      <div class="price-section">
+        <span class="footwear-price">{{ footwear.price | currency:'EUR':'symbol' }}</span>
+      </div>
+
+      <div class="details-section">
+        <p><strong>Color:</strong> {{ footwear.color }}</p>
+        <p><strong>Size:</strong> {{ footwear.size }}</p>
+        <p><strong>In Stock:</strong> <span class="stock-info">{{ footwear.stock }} pcs</span></p>
+      </div>
+
+      <div class="description-section">
+        <h4>Product Description</h4>
+        <p>{{ footwear.description }}</p>
+      </div>
+
+      <button class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+    </div>
+  </div>
+    
+}
+@else {
+    <div class="text-center loading-message">
+      <p>Loading...</p>
+    </div>
+}
