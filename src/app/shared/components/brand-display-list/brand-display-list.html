@@ -1,0 +1,23 @@
+  <div class="row">
+    
+    @for (brand of brands; track $index) {
+        <div class="col-md-4 mb-3">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <h5 class="card-title">{{ brand.name }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ brand.country }}</h6>
+                    <p class="card-text">{{ brand.description }}</p>
+                    <a [href]="brand.website" target="_blank" class="card-link">
+                        Visit Website
+                    </a>
+
+                    <ng-container
+                        *ngTemplateOutlet="contentTemplate; context: { $implicit: brand }"
+                    ></ng-container>
+
+                </div>
+            </div>
+        </div>
+    }
+    
+  </div>

@@ -1,6 +1,8 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { Footwear } from '../../../core/models/Footwear.model';
 import { FormsModule } from '@angular/forms';
+import { FootwearService } from '../../../core/services/footwear-service';
+import { IBrandName } from '../../interfaces/ISelectedBrand.interface';
 
 @Component({
   selector: 'app-filter-footwear-sidebar',
@@ -9,18 +11,10 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './filter-footwear-sidebar.css'
 })
 export class FilterFootwearSidebar {
-  maxPrice: number = 30000;
-  selectedBrand: string = '';
-
-  brands: string[] = ['Nike', 'Adidas', 'Puma', 'New Balance'];
-
-  private _shoes: Footwear[] = [];
-  
+  @Input() brands: IBrandName[] = [];
   @Input() 
     set shoes(value: Footwear[]) {
-      // Postavite vrednost _shoes na novu vrednost
       this._shoes = value;
-      // Pokrenite filter svaki put kada se podaci promene
       this.applyFilter(); 
     }
 
@@ -29,14 +23,23 @@ export class FilterFootwearSidebar {
     }
 
   filteredShoes: Footwear[] = [];
-  @Output() filterShoes = new EventEmitter<Footwear[]>();     // filtered products
+  @Output() filterShoes = new EventEmitter<Footwear[]>();
+
+
+  footwearService = inject(FootwearService);
+
+
+  maxPrice: number = 30000;
+  selectedBrand: string = "";
+  private _shoes: Footwear[] = [];
+
 
   // Apply local filters (price + brand)
   applyFilter() {
     this.filteredShoes = this.shoes.filter(p =>
       p.price <= this.maxPrice &&
       (this.selectedBrand === '' || p.brand === this.selectedBrand)
-    );
+    );    
     this.filterShoes.emit(this.filteredShoes);
   }
 }

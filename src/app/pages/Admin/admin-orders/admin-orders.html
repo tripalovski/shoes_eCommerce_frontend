@@ -1,0 +1,47 @@
+<div class="container mt-4">
+  <h2>Sve narudžbine</h2>
+  
+  @if(isLoading){
+      <div>
+        <p>Učitavanje narudžbina...</p>
+      </div>
+  }
+  @else{
+    @if(orders.length > 0){
+        @for (order of orders; track $index) {
+            @if(order.status == OrderStatus.Pending){
+                <app-order-display
+                    [orderOptionsTemplate]="pendingOptions"
+                    [itemTemplate]="itemTemplate"
+                    [order]="order"
+                >
+                </app-order-display>
+                <ng-template #pendingOptions let-order >
+                    <button (click)="updateStatus(order.id, OrderStatus.Accepted)">Accept</button>
+                    <button (click)="updateStatus(order.id, OrderStatus.Denied)">Deny</button>
+                </ng-template>
+                <ng-template #itemTemplate let-item="item" let-order="order" >
+                    <button (click)="removeItemFromOrder(order.id, item.footwearId)">Remove</button>
+                </ng-template>
+            }
+        }
+        @for (order of orders; track $index) {
+            @if(order.status == OrderStatus.Accepted || order.status == OrderStatus.Denied){
+                <app-order-display
+                    [orderOptionsTemplate]="completedOptions"
+                    [order]="order"
+                >
+                </app-order-display>
+                <ng-template #completedOptions let-order>
+                    <button (click)="deleteOrder(order.id)">Delete</button>
+                </ng-template>
+            }
+        }
+    }
+    @else {
+        <ng-template #noOrders>
+            <p class="text-center">Nema pronađenih narudžbina.</p>
+        </ng-template>
+    }
+  }
+</div>

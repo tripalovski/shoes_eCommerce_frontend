@@ -14,7 +14,7 @@
         <option value="">All</option>
 
         @for (brand of brands; track $index) {
-        <option [value]="brand">{{ brand }}</option>
+        <option [value]="brand.name">{{ brand.name }}</option>
         }
     </select>
 

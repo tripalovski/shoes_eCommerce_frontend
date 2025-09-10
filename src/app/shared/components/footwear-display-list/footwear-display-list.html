@@ -4,9 +4,11 @@
             <div class="card h-100">
             <img [src]="shoe.imageUrl" class="card-img-top" alt="{{ shoe.name }}" />
             <div class="card-body">
-                <h5 class="card-title">{{ shoe.name }}</h5>
+                <h5 class="card-title"> <a [routerLink]="[shoe.id]">{{ shoe.name }}</a></h5>
                 <p class="card-text">{{ shoe.brand }}</p>
                 <p class="card-text fw-bold">{{ shoe.price }} RSD</p>
+
+                <!-- to allow use of shoes to outside buttons -->
                 <ng-container 
                     *ngTemplateOutlet="contentTemplate; context: { $implicit: shoe }"
                 ></ng-container>
